@@ -1,7 +1,6 @@
 function Calc(action, a, b) {
-  if (typeof a != 'number') { return 'Error' }
-  if (typeof b != 'number') { return 'Error' }
-  if (action == 'sum') { return sum(a, b) }
+  if (typeof a != 'number' || typeof b != 'number') { return 'Error' }
+  else if (action == 'sum') { return sum(a, b) }
   else if (action == 'minus') { return minus(a, b) }
   else if (action == 'multiply') {return multiply(a, b)}
   else if (action == 'division') {return division(a, b)}

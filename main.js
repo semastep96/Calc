@@ -1,8 +1,14 @@
-function Calc(action, a, b) {
-  const isNotValid = isNotValidCalc(action, a, b)
+function calc(action, a, b) {
+  //Errors 
+  const isDevisibleByZero = (action === 'division' || action === 'remainder') && b === 0;
 
-  if (isNotValid) { return isNotValid }
+  if (isNotValidNumber(a) || isNotValidNumber(b)) { return 'Error' }
 
+  if (isDevisibleByZero) {
+    return 'cannot be divisible by 0'
+  }
+
+  //Actions
   if (action == 'sum') { return a + b }
 
   else if (action == 'minus') { return a - b }
@@ -15,44 +21,48 @@ function Calc(action, a, b) {
 
   else if (action == 'exponentiation') { return a ** b }
 
-  return 'unknown operator'
+  else { return 'unknown operator' }
 }
 
-function isNotValidCalc(action, a, b) {
-  // check a and b - numbers and not a NaN or Infinity
-  const isNotValidNumbers = typeof a !== 'number' || typeof b !== 'number' ||
-    a !== a || b !== b ||
-    a === Infinity || a === -Infinity ||
-    b === Infinity || b === -Infinity;
+function isNotValidNumber(num) {
 
-  if (isNotValidNumbers) { return 'Error' }
+  return (typeof num !== 'number' || num !== num || num === Infinity || num === -Infinity);
 
-  //check divisible by 0
-  if ((action === 'division' || action === 'remainder') && b === 0) {
-    return 'cannot be divisible by 0'
-  }
-
-  return false
 }
 
+console.log(`
+Errors: 
+
+wrong action: ${calc('zdorovki', 4, 2)}
+
+a - str: ${calc('sum', 'str', 2)}
+
+b - Boolean: ${calc('sum', 4, true)}
+
+b - NaN: ${calc('sum', 4, NaN)}
+
+a - NaN: ${calc('sum', NaN, 2)}
+
+a - Infinity: ${calc('sum', Infinity, 2)}
+
+b - -Infinity: ${calc('sum', 4, -Infinity)}
+
+divisible and remainder by 0: ${calc('remainder', 4, 0)}
 
 
-console.log(`\n
-errors: \n
-wrong action: ${Calc('zdorovki', 4, 2)}\n
-a - str: ${Calc('sum', 'str', 2)}\n
-b - Boolean: ${Calc('sum', 4, true)}\n
-b - NaN: ${Calc('sum', 4, NaN)}\n
-a - NaN: ${Calc('sum', NaN, 2)}\n
-a - Infinity: ${Calc('sum', Infinity, 2)}\n
-b - -Infinity: ${Calc('sum', 4, -Infinity)}\n
-divisible and remainder by 0: ${Calc('remainder', 4, 0)}\n
-\n
-actions: a = 5, b = 2\n
-sum: ${Calc('sum', 5, 2)}\n
-minus: ${Calc('minus', 5, 2)}\n
-multiply: ${Calc('multiply', 5, 2)}\n
-division: ${Calc('division', 5, 2)}\n
-remainder: ${Calc('remainder', 5, 2)}\n
-exponentiation: ${Calc('exponentiation', 5, 2)}\n
+
+Actions: a = 5, b = 2
+
+sum: ${calc('sum', 5, 2)}
+
+minus: ${calc('minus', 5, 2)}
+
+multiply: ${calc('multiply', 5, 2)}
+
+division: ${calc('division', 5, 2)}
+
+remainder: ${calc('remainder', 5, 2)}
+
+exponentiation: ${calc('exponentiation', 5, 2)}
+
 `);

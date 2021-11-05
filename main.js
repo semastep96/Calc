@@ -1,34 +1,27 @@
-function Calc(action, a, b) {
-  // Errors 
-  const isDevisibleByZero = (action === 'division' || action === 'remainder') && b === 0;
+function Calc(operator, a, b) {
 
+  const isDevisibleByZero = (operator === 'div' || operator === 'rem') && b === 0;
+
+  const operations = {
+    sum: a + b,
+    sub: a - b,
+    mult: a * b,
+    div: a / b,
+    rem: a % b,
+    exp: a ** b,
+  }
+
+  // Errors 
   if (isNotValidNumber(a) || isNotValidNumber(b)) { return 'Error' }
 
   if (isDevisibleByZero) { return 'cannot be divisible by 0' }
 
+  if (!operations[operator]) {return 'unknown operator'}
+
   // Actions
-  switch (action) {
-    case 'sum':
-      return a + b;
-
-    case 'minus':
-      return a - b;
-
-    case 'multiply':
-      return a * b;
-
-    case 'division':
-      return a / b;
-
-    case 'remainder':
-      return a % b;
-
-    case 'exponentiation':
-      return a ** b;
-
-    default:
-      return 'unknown operator';
-  }
+  
+  return operations[operator]
+  
 }
 
 function isNotValidNumber(num) {
@@ -55,7 +48,7 @@ a - Infinity: ${Calc('sum', Infinity, 2)}
 
 b - -Infinity: ${Calc('sum', 4, -Infinity)}
 
-div/remainder by 0: ${Calc('remainder', 4, 0)}
+div/rem by 0: ${Calc('rem', 4, 0)}
 -/---------------------
 
 
@@ -63,13 +56,13 @@ Actions: a = 5, b = 2
 -----------------------
 sum: ${Calc('sum', 5, 2)}
 
-minus: ${Calc('minus', 5, 2)}
+sub: ${Calc('sub', 5, 2)}
 
-multiply: ${Calc('multiply', 5, 2)}
+mult: ${Calc('mult', 5, 2)}
 
-division: ${Calc('division', 5, 2)}
+div: ${Calc('div', 5, 2)}
 
-remainder: ${Calc('remainder', 5, 2)}
+rem: ${Calc('rem', 5, 2)}
 
-exponentiation: ${Calc('exponentiation', 5, 2)}
+exp: ${Calc('exp', 5, 2)}
 -/---------------------`);
